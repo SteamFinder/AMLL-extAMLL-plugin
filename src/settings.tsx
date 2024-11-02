@@ -64,19 +64,24 @@ export const SettingPage: FC = () => {
     };
 
     // 检查更新信息
-    const [Ver, setExtsportifyVer] = useState("unknown Ver");
-    const [OnlineVer, setExtsportifyOnlineVer] = useState("unknown OnlineVer");
-    const [Channel, setExtsportifyChannel] = useState("unknown Channel");
-    const [MinApi, setExtsportifyMinApi] = useState("unknown MinApi");
-    const [UpdTime, setExtsportifyUpdTime] = useState("unknown UpdTime");
-    const [UpdSrc, setExtsportifyUpdSrc] = useState("unknown UpdSrc");
+    const [Ver, setVer] = useState("unknown Ver");
+    const [OnlineVer, setOnlineVer] = useState("unknown OnlineVer");
+    const [Channel, setChannel] = useState("unknown Channel");
+    const [MinApi, setMinApi] = useState("unknown MinApi");
+    const [UpdTime, setUpdTime] = useState("unknown UpdTime");
+    const [UpdSrc, setUpdSrc] = useState("unknown UpdSrc");
     const [updateAvailable, setUpdateAvailable] = useState(false);
 
     async function checkUpdate() {
         consoleLog("INFO", "settings", "检查更新中");
+        setVer(extVerInfos.extVer);
+        setChannel(extVerInfos.extChannel);
+        setMinApi(extVerInfos.minApi);
+        setUpdTime(extVerInfos.updTime);
+        setUpdSrc(extVerInfos.updSrc);
         try {
             const updateInfosResponse = await fetch(
-                "https://cdn.jsdelivr.net/gh/SteamFinder/AMLL-extSpotify-plugin/src/static/version.json",
+                "https://cdn.jsdelivr.net/gh/SteamFinder/AMLL-extAMLL-plugin/src/static/version.json",
                 {
                     method: "GET",
                     cache: 'no-cache'
@@ -87,12 +92,7 @@ export const SettingPage: FC = () => {
                 if (updateInfos.verNum > extVerInfos.verNum) {
                     setUpdateAvailable(true);
                 }
-                setExtsportifyVer(extVerInfos.extVer);
-                setExtsportifyChannel(extVerInfos.extChannel);
-                setExtsportifyMinApi(extVerInfos.minApi);
-                setExtsportifyUpdTime(extVerInfos.updTime);
-                setExtsportifyOnlineVer(updateInfos.extVer);
-                setExtsportifyUpdSrc(extVerInfos.updSrc);
+                setOnlineVer(updateInfos.extVer);
                 consoleLog("INFO", "settings", "检查更新成功");
             } else {
                 consoleLog("INFO", "settings", "检查更新失败");
@@ -101,6 +101,10 @@ export const SettingPage: FC = () => {
             consoleLog("INFO", "settings", "检查更新失败");
         }
     }
+
+    useEffect(() => {
+        checkUpdate();
+    }, []);
 
     // 设置AMLL Font Size
     const [amllFontSize, setAmllFontSize] = useAtom(amllFontSizeAtom);
@@ -147,7 +151,7 @@ export const SettingPage: FC = () => {
 
     return (
         <>
-            <SubTitle> 设置</SubTitle>
+            <SubTitle>extAMLL 设置</SubTitle>
 
             <Card mt="2">
                 <DataList.Root>
@@ -204,7 +208,7 @@ export const SettingPage: FC = () => {
                 </DataList.Root>
             </Card>
 
-            <SubTitle>Spotify API</SubTitle>
+            <SubTitle>AMLL 增强设置</SubTitle>
             <Card mt="2">
                 <Flex direction="row" align="center" gap="4" my="2">
                     <Flex direction="column" flexGrow="1">

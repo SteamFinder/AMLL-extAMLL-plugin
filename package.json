@@ -12,7 +12,7 @@
     "name:en-US": "extAMLL",
     "name:zh-CN": "AMLL增强包",
     "dependency": [],
-    "icon": "https://cdn.jsdelivr.net/gh/SteamFinder/AMLL-extAMLL-plugin/src/static/extensionIcon.svg"
+    "icon": "https://cdn.jsdelivr.net/gh/SteamFinder/AMLL-extAMLL-plugin/src/static/icon.svg"
   },
   "devDependencies": {
     "@applemusic-like-lyrics/lyric": "^0.2.4",
